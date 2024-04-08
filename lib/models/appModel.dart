@@ -9,7 +9,7 @@ class AppModel extends ChangeNotifier {
     Category(title: 'Studies', color: Colors.orangeAccent)
   ];
   int isDoneCount = 0;
-  Category temporaryCategory = Category(title: 'Home', color: Colors.greenAccent);
+  Category? temporaryCategory = Category(title: 'Home2', color: Colors.greenAccent);
 
   void addTask(String name, String description, Category category) {
     tasks.add(Task(name: name, description: description, category: category));
@@ -18,11 +18,19 @@ class AppModel extends ChangeNotifier {
 
   void removeTask(Task task) {
     tasks.remove(task);
+    if (task.isDone == true) {
+      isDoneCount--;
+    }
     notifyListeners();
   }
 
   void changeDone(int index) {
     tasks[index].isDone = !tasks[index].isDone;
+    if (tasks[index].isDone == true) {
+      isDoneCount++;
+    } else {
+      isDoneCount--;
+    }
     notifyListeners();
   }
 }

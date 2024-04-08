@@ -37,6 +37,8 @@ class RemoveWidget extends StatelessWidget{
                       ElevatedButton(
                           onPressed: () {
                             model.removeTask(task);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                           },
                           child: const Text('Yes')),
                       const Spacer(),

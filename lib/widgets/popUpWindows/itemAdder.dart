@@ -16,7 +16,7 @@ class _ItemAdderState extends State<ItemAdder> {
   late TextEditingController controller2;
   String name = 'Unknown task';
   String description = 'No description provided';
-  Category category = Category(title: 'Home', color: Colors.greenAccent);
+  Category? _value;
 
   @override
   void initState() {
@@ -35,6 +35,7 @@ class _ItemAdderState extends State<ItemAdder> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(builder: (context, model, child) {
+      model.temporaryCategory = model.categories[0];
       return Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
@@ -87,9 +88,10 @@ class _ItemAdderState extends State<ItemAdder> {
                             style: const TextStyle(color: Colors.white)));
                   }).toList(),
                   onChanged: (Category? newCategory) {
-                    model.temporaryCategory = newCategory!;
+                      model.temporaryCategory = newCategory!;
                   },
-                  value: model.temporaryCategory),
+                  value: model.temporaryCategory,
+                ),
             ),
             SizedBox(height: sizeBox),
             const Text('Description:',
@@ -114,7 +116,7 @@ class _ItemAdderState extends State<ItemAdder> {
             SizedBox(height: sizeBox),
             FloatingActionButton(
               onPressed: () {
-                model.addTask(name, description, category);
+                model.addTask(name, description, model.temporaryCategory!);
                 Navigator.pop(context);
               },
               heroTag: 'adder',
